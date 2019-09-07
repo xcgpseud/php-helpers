@@ -1,0 +1,19 @@
+{
+  "name": "chris/helpers",
+  "authors": [
+    {
+      "name": "chrisevans.go",
+      "email": "chrisevans.go@gmail.com"
+    }
+  ],
+  "require": {
+    "phpunit/phpunit": "^8.3",
+    "myclabs/php-enum": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Helpers\\": "src/",
+      "Tests\\": "tests/"
+    }
+  }
+}
