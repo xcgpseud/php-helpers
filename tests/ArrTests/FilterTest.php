@@ -5,47 +5,47 @@ namespace Tests\ArrTests;
 use Helpers\Iterable\Arr;
 use PHPUnit\Framework\TestCase;
 
-final class MapTest extends TestCase
+final class FilterTest extends TestCase
 {
-    public function testMapWithRetainKeys(): void
+    public function testFilterWithRetainKeys(): void
     {
         // Arrange
         $input = [
             4 => 1, 8 => 2,
         ];
         $expected = [
-            4 => 2, 8 => 4,
+            8 => 2,
         ];
 
         // Act
-        $output = Arr::with($input)->map(function ($value) {
-            return $value * 2;
+        $output = Arr::with($input)->filter(function ($value) {
+            return $value % 2 == 0;
         }, true)->getArray();
 
         // Assert
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapWithoutRetainKeys(): void
+    public function testFilterWithoutRetainKeys(): void
     {
         // Arrange
         $input = [
             4 => 1, 8 => 2,
         ];
         $expected = [
-            0 => 2, 1 => 4,
+            0 => 2,
         ];
 
         // Act
-        $output = Arr::with($input)->map(function ($value) {
-            return $value * 2;
+        $output = Arr::with($input)->filter(function ($value) {
+            return $value % 2 == 0;
         }, false)->getArray();
 
         // Assert
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapRecursiveWithRetainKeys(): void
+    public function testFilterRecursiveWithRetainKeys(): void
     {
         // Arrange
         $input = [
@@ -66,29 +66,29 @@ final class MapTest extends TestCase
         $expected = [
             4 => [
                 4 => [
-                    4 => 2, 8 => 4,
+                    8 => 2,
                 ],
                 8 => [
-                    4 => 6, 8 => 8,
+                    8 => 4,
                 ],
             ],
             8 => [
                 8 => [
-                    8 => 4, 4 => 2,
+                    8 => 2,
                 ],
             ],
         ];
 
         // Act
-        $output = Arr::with($input)->mapRecursive(function ($value) {
-            return $value * 2;
+        $output = Arr::with($input)->filterRecursive(function ($value) {
+            return $value % 2 == 0;
         }, true)->getArray();
 
         // Assert
         $this->assertEquals($expected, $output);
     }
 
-    public function testMapRecursiveWithoutRetainKeys(): void
+    public function testFilterRecursiveWithoutRetainKeys(): void
     {
         // Arrange
         $input = [
@@ -109,22 +109,22 @@ final class MapTest extends TestCase
         $expected = [
             0 => [
                 0 => [
-                    0 => 2, 1 => 4,
+                    0 => 2,
                 ],
                 1 => [
-                    0 => 6, 1 => 8,
+                    0 => 4,
                 ],
             ],
             1 => [
                 0 => [
-                    0 => 4, 1 => 2,
+                    0 => 2,
                 ],
             ],
         ];
 
         // Act
-        $output = Arr::with($input)->mapRecursive(function ($value) {
-            return $value * 2;
+        $output = Arr::with($input)->filterRecursive(function ($value) {
+            return $value % 2 == 0;
         }, false)->getArray();
 
         // Assert
